@@ -21,7 +21,7 @@ const (
 	missingDataBreaching    = "breaching"
 	missingDataIgnore       = "ignore"
 	missingDataMissing      = "missing"
-	missingDataNotBreaching = "notBreaching"
+	missingDataNotBreaching = "not_breaching"
 )
 
 func missingData_Values() []string {
