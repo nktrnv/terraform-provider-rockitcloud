@@ -23,6 +23,7 @@ func validDashboardName(v interface{}, k string) (ws []string, errors []error) {
 	return
 }
 
+//nolint:unparam // ARNs are not supported as actions
 func validEC2AutomateARN(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 

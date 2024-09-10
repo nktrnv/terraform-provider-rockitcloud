@@ -204,6 +204,7 @@ func ResourceMetricAlarm() *schema.Resource {
 			},
 			"datapoints_to_alarm": {
 				Type:         schema.TypeInt,
+				Computed:     true,
 				Optional:     true,
 				ValidateFunc: validation.IntAtLeast(1),
 			},
@@ -234,6 +235,7 @@ func ResourceMetricAlarm() *schema.Resource {
 			},
 			"unit": {
 				Type:         schema.TypeString,
+				Computed:     true,
 				Optional:     true,
 				ValidateFunc: validation.StringInSlice(cloudwatch.StandardUnit_Values(), false),
 			},
