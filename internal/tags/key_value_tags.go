@@ -13,6 +13,7 @@ import (
 
 const (
 	AwsTagKeyPrefix                             = `aws:`
+	CloudTagKeyPrefix                           = `cloud:`
 	ElasticbeanstalkTagKeyPrefix                = `elasticbeanstalk:`
 	NameTagKey                                  = `Name`
 	RdsTagKeyPrefix                             = `rds:`
@@ -41,7 +42,7 @@ func (tags KeyValueTags) IgnoreAWS() KeyValueTags {
 	result := make(KeyValueTags)
 
 	for k, v := range tags {
-		if !strings.HasPrefix(k, AwsTagKeyPrefix) {
+		if !strings.HasPrefix(k, AwsTagKeyPrefix) && !strings.HasPrefix(k, CloudTagKeyPrefix) {
 			result[k] = v
 		}
 	}
@@ -105,7 +106,7 @@ func (tags KeyValueTags) IgnoreElasticbeanstalk() KeyValueTags {
 	result := make(KeyValueTags)
 
 	for k, v := range tags {
-		if strings.HasPrefix(k, AwsTagKeyPrefix) {
+		if strings.HasPrefix(k, AwsTagKeyPrefix) || strings.HasPrefix(k, CloudTagKeyPrefix) {
 			continue
 		}
 
@@ -152,7 +153,7 @@ func (tags KeyValueTags) IgnoreRds() KeyValueTags {
 	result := make(KeyValueTags)
 
 	for k, v := range tags {
-		if strings.HasPrefix(k, AwsTagKeyPrefix) {
+		if strings.HasPrefix(k, AwsTagKeyPrefix) || strings.HasPrefix(k, CloudTagKeyPrefix) {
 			continue
 		}
 
@@ -171,7 +172,7 @@ func (tags KeyValueTags) IgnoreServerlessApplicationRepository() KeyValueTags {
 	result := make(KeyValueTags)
 
 	for k, v := range tags {
-		if strings.HasPrefix(k, AwsTagKeyPrefix) {
+		if strings.HasPrefix(k, AwsTagKeyPrefix) || strings.HasPrefix(k, CloudTagKeyPrefix) {
 			continue
 		}
 
