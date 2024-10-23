@@ -75,8 +75,12 @@ For more information about filtering, see the [EC2 API documentation][describe-s
 
 ## Attributes Reference
 
+In addition to the arguments above, the following attributes are exported:
+
+* `map_public_ip_on_launch` - Indicates whether public IP addresses will be associated with instances created in this subnet. Addresses are associated only if there are available allocated Elastic IP addresses.
+
 ->  **Unsupported attributes**
-In addition to the attributes above, the following attributes are exported but unsupported:
+These attributes are currently unsupported:
 
 * `arn` - ARN of the subnet. Always `""`.
 * `assign_ipv6_address_on_creation` - Whether an IPv6 address is assigned on creation. Always `false`.
@@ -88,7 +92,6 @@ In addition to the attributes above, the following attributes are exported but u
 * `ipv6_cidr_block_association_id` - Association ID of the IPv6 CIDR block. Always `""`.
 * `ipv6_native` - Indicates whether this is an IPv6-only subnet. Always `false`.
 * `map_customer_owned_ip_on_launch` - Whether customer owned IP addresses are assigned on network interface creation. Always `false`.
-* `map_public_ip_on_launch` - Whether public IP addresses are assigned on instance launch. Always `false`.
 * `outpost_arn` - ARN of the Outpost. Always `""`.
 * `owner_id` - The ID of the project that owns the subnet. Always `""`.
 * `private_dns_hostname_type_on_launch` - The type of hostnames assigned to instances in the subnet at launch. Always `""`.
