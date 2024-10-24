@@ -305,22 +305,26 @@ func TestKeyValueTagsIgnoreAWS(t *testing.T) {
 		{
 			name: "all",
 			tags: New(map[string]string{
-				"aws:cloudformation:key1": "value1",
-				"aws:cloudformation:key2": "value2",
-				"aws:cloudformation:key3": "value3",
+				"aws:cloudformation:key1":   "value1",
+				"aws:cloudformation:key2":   "value2",
+				"aws:cloudformation:key3":   "value3",
+				"cloud:cloudformation:key4": "value4",
+				"cloud:cloudformation:key5": "value5",
+				"cloud:cloudformation:key6": "value6",
 			}),
 			want: map[string]string{},
 		},
 		{
 			name: "mixed",
 			tags: New(map[string]string{
-				"aws:cloudformation:key1": "value1",
-				"key2":                    "value2",
-				"key3":                    "value3",
+				"aws:cloudformation:key1":   "value1",
+				"cloud:cloudformation:key2": "value2",
+				"key3":                      "value3",
+				"key4":                      "value4",
 			}),
 			want: map[string]string{
-				"key2": "value2",
 				"key3": "value3",
+				"key4": "value4",
 			},
 		},
 		{
@@ -558,24 +562,26 @@ func TestKeyValueTagsIgnoreElasticbeanstalk(t *testing.T) {
 		{
 			name: "all",
 			tags: New(map[string]string{
-				"aws:cloudformation:key1": "value1",
-				"elasticbeanstalk:key2":   "value2",
-				"Name":                    "value3",
+				"aws:cloudformation:key1":   "value1",
+				"cloud:cloudformation:key2": "value2",
+				"elasticbeanstalk:key3":     "value3",
+				"Name":                      "value4",
 			}),
 			want: map[string]string{},
 		},
 		{
 			name: "mixed",
 			tags: New(map[string]string{
-				"aws:cloudformation:key1": "value1",
-				"key2":                    "value2",
-				"elasticbeanstalk:key3":   "value3",
-				"key4":                    "value4",
-				"Name":                    "value5",
+				"aws:cloudformation:key1":   "value1",
+				"cloud:cloudformation:key2": "value2",
+				"key3":                      "value3",
+				"elasticbeanstalk:key4":     "value4",
+				"key5":                      "value5",
+				"Name":                      "value6",
 			}),
 			want: map[string]string{
-				"key2": "value2",
-				"key4": "value4",
+				"key3": "value3",
+				"key5": "value5",
 			},
 		},
 		{
@@ -703,22 +709,24 @@ func TestKeyValueTagsIgnoreRds(t *testing.T) {
 		{
 			name: "all",
 			tags: New(map[string]string{
-				"aws:cloudformation:key1": "value1",
-				"rds:key2":                "value2",
+				"aws:cloudformation:key1":   "value1",
+				"cloud:cloudformation:key2": "value2",
+				"rds:key3":                  "value3",
 			}),
 			want: map[string]string{},
 		},
 		{
 			name: "mixed",
 			tags: New(map[string]string{
-				"aws:cloudformation:key1": "value1",
-				"key2":                    "value2",
-				"rds:key3":                "value3",
-				"key4":                    "value4",
+				"aws:cloudformation:key1":   "value1",
+				"cloud:cloudformation:key2": "value2",
+				"key3":                      "value3",
+				"rds:key4":                  "value4",
+				"key5":                      "value5",
 			}),
 			want: map[string]string{
-				"key2": "value2",
-				"key4": "value4",
+				"key3": "value3",
+				"key5": "value5",
 			},
 		},
 		{
