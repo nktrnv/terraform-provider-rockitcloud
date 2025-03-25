@@ -35,6 +35,18 @@ data "aws_eks_cluster" "example" {
     * `ip_family` - The IP family used to assign Kubernetes pod and service addresses.
     * `service_ipv4_cidr` - The CIDR block to assign Kubernetes service IP addresses from.
 * `legacy_cluster_params` - The parameters for fine-tuning the Kubernetes cluster.
+    * `docker_registry_config` - The configuration of the Docker Registry.
+        * `volume_iops` - The number of read/write operations per second for the Docker Registry volume.
+        * `volume_size` - The size of the Docker Registry volume in GiB.
+        * `volume_type` - The type of the Docker Registry volume.
+    * `ebs_provider_config` - The configuration of the EBS Provider.
+        * `ebs_user` - The EBS Provider user name.
+    * `ingress_config` - The configuration of the Ingress controller.
+        * `instance_type` - The instance type of the Ingress controller.
+        * `public_ip` - The public IP address at which the Ingress controller can be accessed.
+        * `volume_iops` - The number of read/write operations per second for the Ingress controller volume.
+        * `volume_size` - The size of the Ingress controller volume in GiB.
+        * `volume_type` - The type of the Ingress controller volume.
     * `master_config` - The configuration of the master node of the cluster.
         * `high_availability` - Indicates whether this is a high-availability cluster.
         * `instance_type` - The instance type of the master node.
@@ -42,6 +54,8 @@ data "aws_eks_cluster" "example" {
         * `volume_iops` - The number of read/write operations per second for the master node volume.
         * `volume_size` - The size of the master node volume in GiB.
         * `volume_type` - The type of the master node volume.
+    * `nlb_provider_config` - The configuration of the NLB Provider.
+        * `nlb_user` - The NLB Provider user name.
 * `platform_version` - The platform version for the cluster.
 * `status` - The status of the EKS cluster. One of `CLAIMED`, `CREATING`, `DELETED`, `DELETING`, `ERROR`, `MODIFYING`, `PENDING`, `PROVISIONING`, `READY`, `REPAIRING`.
 * `version` - The Kubernetes server version for the cluster.

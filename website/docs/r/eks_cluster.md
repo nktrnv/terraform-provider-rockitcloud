@@ -76,6 +76,50 @@ resource "aws_eks_cluster" "example" {
 }
 ```
 
+### EKS Cluster with extra services
+
+~> **Note**
+This example uses the same VPC and subnet as in the [EKS High-Availability Cluster example](#eks-high-availability-cluster).
+
+```terraform
+resource "aws_eks_cluster" "example" {
+  name    = "tf-cluster-extra-services"
+  version = "1.30.2"
+
+  legacy_cluster_params {
+    docker_registry_config {
+      volume_type = "gp2"
+      volume_size = 32
+    }
+
+    ebs_provider_config {
+      ebs_user = "ebs"
+    }
+
+    ingress_config {
+      instance_type = "c5.large"
+      volume_type   = "gp2"
+      volume_size   = 32
+    }
+
+    master_config {
+      high_availability = false
+      instance_type     = "c5.large"
+      volume_type       = "gp2"
+      volume_size       = 64
+    }
+
+    nlb_provider_config {
+      nlb_user = "nlb"
+    }
+  }
+
+  vpc_config {
+    subnet_ids = [aws_subnet.example.id]
+  }
+}
+```
+
 ## Argument Reference
 
 The following arguments are required:
@@ -111,8 +155,42 @@ The block must meet the following requirements:
 
 The `legacy_cluster_params` block has the following structure:
 
+* `docker_registry_config` – (Optional) The configuration of the Docker Registry.
+  The structure of this block is [described below](#docker_registry_config).
+* `ebs_provider_config` – (Optional) The configuration of the EBS Provider.
+  The structure of this block is [described below](#ebs_provider_config).
+* `ingress_config` – (Optional) The configuration of the Ingress controller.
+  The structure of this block is [described below](#ingress_config).
 * `master_config` – (Optional) The configuration of the master node of the cluster.
   The structure of this block is [described below](#master_config).
+* `nlb_provider_config` – (Optional) The configuration of the NLB Provider.
+    The structure of this block is [described below](#nlb_provider_config).
+
+#### docker_registry_config
+
+The `docker_registry_config` block has the following structure:
+
+* `volume_iops` - (Optional) The number of read/write operations per second for the Docker Registry volume.
+  The parameter must be set if `volume_type` is `io2`.
+* `volume_size` - (Required) The size of the Docker Registry volume in GiB.
+* `volume_type` - (Required) The type of the Docker Registry volume. Valid values are `st2`, `gp2`, `io2`.
+
+#### ebs_provider_config
+
+The `ebs_provider_config` block has the following structure:
+
+* `ebs_user` - (Required) The EBS Provider user name.
+
+#### ingress_config
+
+The `ingress_config` block has the following structure:
+
+* `instance_type` - (Required) The instance type of the Ingress controller.
+* `public_ip` - (Optional) The public IP address at which the Ingress controller can be accessed.
+* `volume_iops` - (Optional) The number of read/write operations per second for the Ingress controller volume.
+  The parameter must be set if `volume_type` is `io2`.
+* `volume_size` - (Required) The size of the Ingress controller volume in GiB.
+* `volume_type` - (Required) The type of the Ingress controller volume. Valid values are `st2`, `gp2`, `io2`.
 
 #### master_config
 
@@ -125,6 +203,12 @@ The `master_config` block has the following structure:
   The parameter must be set if `volume_type` is `io2`.
 * `volume_size` - (Required) The size of the master node volume in GiB.
 * `volume_type` - (Required) The type of the master node volume. Valid values are `st2`, `gp2`, `io2`.
+
+#### nlb_provider_config
+
+The `nlb_provider_config` block has the following structure:
+
+* `nlb_user` - (Required) The NLB Provider user name.
 
 ## Attribute Reference
 
