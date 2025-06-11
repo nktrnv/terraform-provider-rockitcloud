@@ -853,7 +853,7 @@ func expandLoggingTypes(vEnabledLogTypes *schema.Set) *eks.Logging {
 	}
 }
 
-func expandLegacyClusterParams(tfList []interface{}) *eks.LegacyClusterParams {
+func expandLegacyClusterParams(tfList []interface{}) *eks.LegacyClusterParamsRequest {
 	if len(tfList) == 0 {
 		return nil
 	}
@@ -863,7 +863,7 @@ func expandLegacyClusterParams(tfList []interface{}) *eks.LegacyClusterParams {
 		return nil
 	}
 
-	legacyParams := &eks.LegacyClusterParams{}
+	legacyParams := &eks.LegacyClusterParamsRequest{}
 
 	if dockerRegistryConfig, ok := tfMap["docker_registry_config"].([]interface{}); ok && len(dockerRegistryConfig) > 0 {
 		legacyParams.DockerRegistryConfig = expandDockerRegistryConfig(dockerRegistryConfig)
@@ -917,7 +917,7 @@ func expandDockerRegistryConfig(tfList []interface{}) *eks.DockerRegistryConfig 
 	return dockerRegistryConfig
 }
 
-func expandEbsProviderConfig(tfList []interface{}) *eks.EbsProviderConfig {
+func expandEbsProviderConfig(tfList []interface{}) *eks.EbsProviderConfigRequest {
 	if len(tfList) == 0 {
 		return nil
 	}
@@ -927,7 +927,7 @@ func expandEbsProviderConfig(tfList []interface{}) *eks.EbsProviderConfig {
 		return nil
 	}
 
-	ebsProviderConfig := &eks.EbsProviderConfig{
+	ebsProviderConfig := &eks.EbsProviderConfigRequest{
 		EbsProviderRequired: aws.Bool(true),
 	}
 
@@ -1014,7 +1014,7 @@ func expandMasterConfig(tfList []interface{}) *eks.MasterConfig {
 	return masterConfig
 }
 
-func expandNlbProviderConfig(tfList []interface{}) *eks.NlbProviderConfig {
+func expandNlbProviderConfig(tfList []interface{}) *eks.NlbProviderConfigRequest {
 	if len(tfList) == 0 {
 		return nil
 	}
@@ -1024,7 +1024,7 @@ func expandNlbProviderConfig(tfList []interface{}) *eks.NlbProviderConfig {
 		return nil
 	}
 
-	nlbProviderConfig := &eks.NlbProviderConfig{
+	nlbProviderConfig := &eks.NlbProviderConfigRequest{
 		NlbProviderRequired: aws.Bool(true),
 	}
 
@@ -1150,7 +1150,7 @@ func flattenNetworkConfig(apiObject *eks.KubernetesNetworkConfigResponse) []inte
 	return []interface{}{tfMap}
 }
 
-func flattenLegacyClusterParams(legacyParams *eks.LegacyClusterParams) []interface{} {
+func flattenLegacyClusterParams(legacyParams *eks.LegacyClusterParamsResponse) []interface{} {
 	if legacyParams == nil {
 		return nil
 	}
@@ -1192,14 +1192,14 @@ func flattenDockerRegistryConfig(dockerRegistryConfig *eks.DockerRegistryConfig)
 	return []interface{}{tfMap}
 }
 
-func flattenEbsProviderConfig(ebsProviderConfig *eks.EbsProviderConfig) []interface{} {
+func flattenEbsProviderConfig(ebsProviderConfig *eks.EbsProviderConfigResponse) []interface{} {
 	if ebsProviderConfig == nil {
 		return nil
 	}
 
 	tfMap := map[string]interface{}{}
 
-	if v := ebsProviderConfig.EbsUser; v != nil {
+	if v := ebsProviderConfig.EbsUserName; v != nil {
 		tfMap["ebs_user"] = aws.StringValue(v)
 	}
 
@@ -1261,14 +1261,14 @@ func flattenMasterConfig(masterConfig *eks.MasterConfig) []interface{} {
 	return []interface{}{tfMap}
 }
 
-func flattenNlbProviderConfig(nlbProviderConfig *eks.NlbProviderConfig) []interface{} {
+func flattenNlbProviderConfig(nlbProviderConfig *eks.NlbProviderConfigResponse) []interface{} {
 	if nlbProviderConfig == nil {
 		return nil
 	}
 
 	tfMap := map[string]interface{}{}
 
-	if v := nlbProviderConfig.NlbUser; v != nil {
+	if v := nlbProviderConfig.NlbUserName; v != nil {
 		tfMap["nlb_user"] = aws.StringValue(v)
 	}
 
